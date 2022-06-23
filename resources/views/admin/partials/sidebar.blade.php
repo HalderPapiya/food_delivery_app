@@ -17,6 +17,11 @@
                 <span class="app-menu__label">Agent</span>
             </a>
         </li>
+        <li>
+            <a class="app-menu__item agent {{ request()->is('admin/agent-salary*') ? 'active' : '' }}" href="{{ route('admin.agent.salary.index') }}"><i class="app-menu__icon fa fa-group"></i>
+                <span class="app-menu__label">Agent Salary</span>
+            </a>
+        </li>
         
     </ul>
 </aside>

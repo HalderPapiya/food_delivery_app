@@ -7,6 +7,8 @@ use App\Contracts\UserContract;
 use App\Repositories\UserRepository;
 use App\Contracts\AgentContract;
 use App\Repositories\AgentRepository;
+use App\Contracts\AgentSalaryContract;
+use App\Repositories\AgentSalaryRepository;
 
 
 use App\Contracts\CategoryContract;
@@ -69,6 +71,7 @@ class RepositoryServiceProvider extends ServiceProvider
     protected $repositories = [
         UserContract::class =>  UserRepository::class,
         AgentContract::class =>  AgentRepository::class,
+        AgentSalaryContract::class =>  AgentSalaryRepository::class,
 
 
         

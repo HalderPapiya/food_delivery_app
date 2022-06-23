@@ -75,6 +75,16 @@ Route::prefix('admin')->name('admin.')->group(function () {
           Route::get('/agent/delete/{id}', [App\Http\Controllers\Admin\AgentController::class, 'destroy'])->name('agent.delete');
           Route::post('/agent/updateStatus', [App\Http\Controllers\Admin\AgentController::class, 'updateStatus'])->name('agent.updateStatus');
 
+           //-----------------Agent-Salary----------------
+
+           Route::get('/agent-salary', [App\Http\Controllers\Admin\AgentSalaryController::class, 'index'])->name('agent.salary.index');
+           Route::get('/agent-salary/create', [App\Http\Controllers\Admin\AgentSalaryController::class, 'create'])->name('agent.salary.create');
+           Route::post('/agent-salary/store', [App\Http\Controllers\Admin\AgentSalaryController::class, 'store'])->name('agent.salary.store');
+           Route::get('/agent-salary/edit/{id}', [App\Http\Controllers\Admin\AgentSalaryController::class, 'edit'])->name('agent.salary.edit');
+           Route::post('/agent-salary/update/{id}', [App\Http\Controllers\Admin\AgentSalaryController::class, 'update'])->name('agent.salary.update');
+           Route::get('/agent-salary/delete/{id}', [App\Http\Controllers\Admin\AgentSalaryController::class, 'destroy'])->name('agent.salary.delete');
+           Route::post('/agent-salary/updateStatus', [App\Http\Controllers\Admin\AgentSalaryController::class, 'updateStatus'])->name('agent.salary.updateStatus');
+
 
     });
 });
