@@ -22,6 +22,11 @@
                 <span class="app-menu__label">Agent Salary</span>
             </a>
         </li>
+        <li>
+            <a class="app-menu__item merchant {{ request()->is('admin/merchant*') ? 'active' : '' }}" href="{{ route('admin.merchant.index') }}"><i class="app-menu__icon fa fa-group"></i>
+                <span class="app-menu__label">Merchant</span>
+            </a>
+        </li>
         
     </ul>
 </aside>

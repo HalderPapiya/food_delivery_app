@@ -1,12 +1,12 @@
 @extends('admin.app')
-@section('title') Agent @endsection
+@section('title') Merchant @endsection
 @section('content')
     <div class="app-title">
         <div>
-            <h1><i class="fa fa-file"></i>Agent</h1>
-            <p>Agent List</p>
+            <h1><i class="fa fa-file"></i>Merchant</h1>
+            <p>Merchant List</p>
         </div>
-        <a href="{{ route('admin.agent.create') }}" class="btn btn-primary pull-right">Add New</a>
+        <a href="{{ route('admin.merchant.create') }}" class="btn btn-primary pull-right">Add New</a>
     </div>
     @include('admin.partials.flash')
     <div class="row">
@@ -27,7 +27,7 @@
                                 <th> City </th>
                                 {{-- <th> Password </th> --}}
                                 <th> Status </th>
-                                <th> Verification Status </th>
+                                {{-- <th> Verification Status </th> --}}
                                 <th style="width:100px; min-width:100px;" class="text-center">Action</th>
                             </tr>
                         </thead>
@@ -45,28 +45,18 @@
                                         <div class="toggle-button-cover margin-auto">
                                             <div class="button-cover">
                                                 <div class="button-togglr b2" id="button-11">
-                                                    <input id="toggle-block" type="checkbox" name="status" class="checkbox" data-agent_id="{{ $data['id'] }}" {{ $data['status'] == true ? 'checked' : '' }}>
+                                                    <input id="toggle-block" type="checkbox" name="status" class="checkbox" data-merchant_id="{{ $data['id'] }}" {{ $data['status'] == true ? 'checked' : '' }}>
                                                     <div class="knobs"><span>Inactive</span></div>
                                                     <div class="layer"></div>
                                                 </div>
                                             </div>
                                         </div>
                                     </td>
-                                    <td class="text-center">
-                                        <div class="toggle-button-cover margin-auto">
-                                            <div class="button-cover">
-                                                <div class="button-togglr b2" id="button-11">
-                                                    <input id="verified-toggle-block" type="checkbox" name="is_verified" class="checkbox" data-verified_id="{{ $data['id'] }}" {{ $data['is_verified'] == true ? 'checked' : '' }}>
-                                                    <div class="knobs"><span>Inactive</span></div>
-                                                    <div class="layer"></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </td>
+                                    
                                     <td class="text-center">
                                     
                                         <div class="btn-group" role="group" aria-label="Second group">
-                                            <a href="{{ url('admin/agent/edit', $data['id']) }}" class="btn btn-sm btn-primary edit-btn"><i class="fa fa-edit"></i></a>
+                                            <a href="{{ url('admin/merchant/edit', $data['id']) }}" class="btn btn-sm btn-primary edit-btn"><i class="fa fa-edit"></i></a>
                                             {{-- <a href="{{ route('admin.interest.details', $interest['id']) }}" class="btn btn-sm btn-primary edit-btn"><i class="fa fa-eye"></i></a> --}}
                                              <a href="javascript: void(0)" data-id="{{$data['id']}}" class="sa-remove btn btn-sm btn-danger edit-btn"><i class="fa fa-trash"></i></a>
                                         </div>
@@ -95,7 +85,7 @@
         });</script>
     <script type="text/javascript">
     $('.sa-remove').on("click",function(){
-        var agentid = $(this).data('id');
+        var merchantid = $(this).data('id');
         swal({
           title: "Are you sure?",
           text: "Your will not be able to recover the record!",
@@ -107,7 +97,7 @@
         },
         function(isConfirm){
           if (isConfirm) {
-            window.location.href = "agent/delete/"+agentid;
+            window.location.href = "merchant/delete/"+merchantid;
             } else {
               swal("Cancelled", "Record is safe", "error");
             }
@@ -116,7 +106,7 @@
     </script>
   <script type="text/javascript">
     $('input[id="toggle-block"]').change(function() {
-        var agent_id = $(this).data('agent_id');
+        var merchant_id = $(this).data('merchant_id');
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
         var status = 0;
       if($(this).is(":checked")){
@@ -127,8 +117,8 @@
       $.ajax({
             type:'POST',
             dataType:'JSON',
-            url:"{{route('admin.agent.updateStatus')}}",
-            data:{ _token: CSRF_TOKEN, id:agent_id, status:status},
+            url:"{{route('admin.merchant.updateStatus')}}",
+            data:{ _token: CSRF_TOKEN, id:merchant_id, status:status},
             success:function(response)
             {
               // $('#success-text').text(response.message);
@@ -160,7 +150,7 @@
       $.ajax({
             type:'POST',
             dataType:'JSON',
-            url:"{{route('admin.agent.updateVerification')}}",
+            url:"{{route('admin.merchant.updateVerification')}}",
             data:{ _token: CSRF_TOKEN, id:verified_id, is_verified:is_verified},
             success:function(response)
             {

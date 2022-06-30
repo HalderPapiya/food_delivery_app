@@ -5,7 +5,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
-class CreateAgentsTable extends Migration
+class CreateMerchantsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,21 +14,20 @@ class CreateAgentsTable extends Migration
      */
     public function up()
     {
-        Schema::create('agents', function (Blueprint $table) {
+        Schema::create('merchants', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('agent_no')->nullable();
-            $table->string('first_name');
-            $table->string('last_name');
-            $table->string('email')->nullable()->unique();
+            $table->string('first_name')->nullable();
+            $table->string('last_name')->nullable();
+            $table->string('shop_name')->nullable();
+            $table->string('email')->nullable();
             $table->string('phone')->nullable();
-            $table->string('password')->nullable();
             $table->string('address')->nullable();
             $table->string('city')->nullable();
+            $table->string('state')->nullable();
             $table->string('pin_code')->nullable();
-            $table->string('vehicle_no')->nullable();
-            $table->string('license')->nullable();
+            $table->string('landmark')->nullable();
+            $table->string('password')->nullable();
             $table->tinyInteger('status')->default('1')->comment('1 = Active, 0 = Inactive');
-            $table->tinyInteger('is_verified')->default('0')->comment('1 = Verified, 0 = Not Verified');
             $table->softDeletes();
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP'));
@@ -42,6 +41,6 @@ class CreateAgentsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('agents');
+        Schema::dropIfExists('merchants');
     }
 }

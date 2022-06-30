@@ -74,6 +74,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
           Route::post('/agent/update/{id}', [App\Http\Controllers\Admin\AgentController::class, 'update'])->name('agent.update');
           Route::get('/agent/delete/{id}', [App\Http\Controllers\Admin\AgentController::class, 'destroy'])->name('agent.delete');
           Route::post('/agent/updateStatus', [App\Http\Controllers\Admin\AgentController::class, 'updateStatus'])->name('agent.updateStatus');
+          Route::post('/agent/updateVerification', [App\Http\Controllers\Admin\AgentController::class, 'updateVerification'])->name('agent.updateVerification');
 
            //-----------------Agent-Salary----------------
 
@@ -84,6 +85,20 @@ Route::prefix('admin')->name('admin.')->group(function () {
            Route::post('/agent-salary/update/{id}', [App\Http\Controllers\Admin\AgentSalaryController::class, 'update'])->name('agent.salary.update');
            Route::get('/agent-salary/delete/{id}', [App\Http\Controllers\Admin\AgentSalaryController::class, 'destroy'])->name('agent.salary.delete');
            Route::post('/agent-salary/updateStatus', [App\Http\Controllers\Admin\AgentSalaryController::class, 'updateStatus'])->name('agent.salary.updateStatus');
+
+
+
+            //-----------------Merchant----------------
+
+          Route::get('/merchant', [App\Http\Controllers\Admin\MerchantController::class, 'index'])->name('merchant.index');
+          Route::get('/merchant/create', [App\Http\Controllers\Admin\MerchantController::class, 'create'])->name('merchant.create');
+          Route::post('/merchant/store', [App\Http\Controllers\Admin\MerchantController::class, 'store'])->name('merchant.store');
+          Route::get('/merchant/edit/{id}', [App\Http\Controllers\Admin\MerchantController::class, 'edit'])->name('merchant.edit');
+          Route::post('/merchant/update/{id}', [App\Http\Controllers\Admin\MerchantController::class, 'update'])->name('merchant.update');
+          Route::get('/merchant/delete/{id}', [App\Http\Controllers\Admin\MerchantController::class, 'destroy'])->name('merchant.delete');
+          Route::post('/merchant/updateStatus', [App\Http\Controllers\Admin\MerchantController::class, 'updateStatus'])->name('merchant.updateStatus');
+          Route::post('/merchant/updateVerification', [App\Http\Controllers\Admin\MerchantController::class, 'updateVerification'])->name('merchant.updateVerification');
+
 
 
     });

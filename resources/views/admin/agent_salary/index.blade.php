@@ -20,11 +20,11 @@
                         <thead>
                             <tr>
                                 <th>Sl. No.</th>
-                                <th>First Name</th>
-                                <th> Last Name </th>
-                                <th> Email </th>
-                                <th>Mobile</th>
-                                <th> City </th>
+                                <th>Agent Name</th>
+                                <th> Agent ID </th>
+                                <th> Salary </th>
+                                <th>Bonus</th>
+                                <th> Total Salary </th>
                                 {{-- <th> Password </th> --}}
                                 <th> Status </th>
                                 <th style="width:100px; min-width:100px;" class="text-center">Action</th>
@@ -34,11 +34,11 @@
                             @foreach($data as $key => $data)
                                 <tr>
                                     <td>{{$key + 1}}</td>
-                                    {{-- <td>{{ $data->first_name }}</td>
-                                    <td>{{ $data->last_name }}</td>
-                                    <td>{{ $data->email }}</td>
-                                    <td>{{ $data->mobile }}</td>
-                                    <td>{{ $data->city }}</td> --}}
+                                    <td>{{ $data->agent ? $data->agent->first_name : ''  }} {{$data->agent ? $data->agent->last_name : ''}}</td>
+                                    <td>{{ $data->agent ? $data->agent->agent_no : ' '}}</td>
+                                    <td>{{ $data->salary }}</td>
+                                    <td>{{ $data->bonus }}</td>
+                                    <td>{{ $data->total_salary }}</td>
                                     
                                     <td class="text-center">
                                         <div class="toggle-button-cover margin-auto">
@@ -51,6 +51,7 @@
                                             </div>
                                         </div>
                                     </td>
+                                   
                                     <td class="text-center">
                                     
                                         <div class="btn-group" role="group" aria-label="Second group">
@@ -110,6 +111,39 @@
             dataType:'JSON',
             url:"{{route('admin.agent.salary.updateStatus')}}",
             data:{ _token: CSRF_TOKEN, id:agent_id, status:status},
+            success:function(response)
+            {
+              // $('#success-text').text(response.message);
+              // $('#success-msg').show();
+              // $('#success-msg').fadeOut(2000);
+              swal("Success!", response.message, "success");
+            },
+            error: function(response)
+            {
+                // console.log(response);
+                // $('#error-text').text("Error! Please try again later");
+                // $('#error-msg').show();
+                // $('#error-msg').fadeOut(2000);
+                swal("Error!", response.message, "error");
+            }
+          });
+    });
+</script>
+<script type="text/javascript">
+    $('input[id="verified-toggle-block"]').change(function() {
+        var verified_id = $(this).data('verified_id');
+        var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+        var is_verified = 0;
+      if($(this).is(":checked")){
+        is_verified = 1;
+      }else{
+        is_verified = 0;
+      }
+      $.ajax({
+            type:'POST',
+            dataType:'JSON',
+            url:"{{route('admin.agent.salary.updateStatus')}}",
+            data:{ _token: CSRF_TOKEN, id:verified_id, is_verified:is_verified},
             success:function(response)
             {
               // $('#success-text').text(response.message);

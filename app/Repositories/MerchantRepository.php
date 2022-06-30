@@ -2,27 +2,27 @@
 
 namespace App\Repositories;
 
-use App\Models\Agent;
+use App\Models\Merchant;
 use App\Traits\UploadAble;
-use App\Contracts\AgentContract;
+use App\Contracts\MerchantContract;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\QueryException;
 use InvalidArgumentException;
 
 /**
- * Class AgentRepository
+ * Class MerchantRepository
  *
  * @package \App\Repositories
  */
-class AgentRepository extends BaseRepository implements AgentContract
+class MerchantRepository extends BaseRepository implements MerchantContract
 {
     use UploadAble;
 
     /**
-     * AgentRepository constructor.
-     * @param Agent $model
+     * MerchantRepository constructor.
+     * @param Merchant $model
      */
-    public function __construct(Agent $model)
+    public function __construct(Merchant $model)
     {
         parent::__construct($model);
         $this->model = $model;
@@ -34,7 +34,7 @@ class AgentRepository extends BaseRepository implements AgentContract
      * @param array $columns
      * @return mixed
      */
-    public function listAgents(string $order = 'id', string $sort = 'desc', array $columns = ['*'])
+    public function listMerchants(string $order = 'id', string $sort = 'desc', array $columns = ['*'])
     {
         return $this->all($columns, $order, $sort);
     }
@@ -44,7 +44,7 @@ class AgentRepository extends BaseRepository implements AgentContract
      * @return mixed
      * @throws ModelNotFoundException
      */
-    public function findAgentById(int $id)
+    public function findMerchantById(int $id)
     {
         try {
             return $this->findOneOrFail($id);
@@ -58,24 +58,22 @@ class AgentRepository extends BaseRepository implements AgentContract
      * @param array $params
      * @return mixed
      */
-    public function createAgent(array $params)
+    public function createMerchant(array $params)
     {
         try {
             $collection = collect($params);
 
-            $data = new Agent;
+            $data = new Merchant;
             $data->first_name = $collection['first_name'];
             $data->last_name = $collection['last_name'];
-            // $data->agent_no = $collection['agent_no'];
-            // $data->license = $collection['license'];
-            // $data->vehicle_no = $collection['vehicle_no'];
             $data->email = $collection['email'];
             $data->phone = $collection['phone'];
             $data->password = $collection['password'];
             $data->address = $collection['address'];
             $data->city = $collection['city'];
             $data->pin_code = $collection['pin_code'];
-            // $data->land_mark = $collection['land_mark'];
+            $data->shop_name = $collection['shop_name'];
+            $data->landmark = $collection['landmark'];
 
             $data->save();
 
@@ -85,23 +83,23 @@ class AgentRepository extends BaseRepository implements AgentContract
         }
     }
 
-    public function updateAgent(array $params)
+    public function updateMerchant(array $params)
     {
         $collection = collect($params);
 
-        $data = $this->findAgentById($params['id']);
+        $data = $this->findMerchantById($params['id']);
 
         $data->first_name = $collection['first_name'];
         $data->last_name = $collection['last_name'];
-        $data->agent_no = $collection['agent_no'];
-        $data->license = $collection['license'];
-        $data->vehicle_no = $collection['vehicle_no'];
+        $data->shop_name = $collection['shop_name'];
         $data->email = $collection['email'];
         $data->phone = $collection['phone'];
         // $data->password = $collection['password'];
         $data->address = $collection['address'];
         $data->city = $collection['city'];
         $data->pin_code = $collection['pin_code'];
+        $data->shop_name = $collection['shop_name'];
+        $data->landmark = $collection['landmark'];
 
         $data->save();
 
@@ -117,7 +115,7 @@ class AgentRepository extends BaseRepository implements AgentContract
     //  */
     // public function verify($id, $is_verified)
     // {
-    //     $data = $this->findAgentById($id);
+    //     $data = $this->findMerchantById($id);
     //     $data->is_verified = $is_verified;
     //     $data->save();
 
@@ -128,7 +126,7 @@ class AgentRepository extends BaseRepository implements AgentContract
      * @param array $params
      * @return mixed
      */
-    public function updateAgentStatus(array $params)
+    public function updateMerchantStatus(array $params)
     {
         $data = $this->findOneOrFail($params['id']);
         $collection = collect($params)->except('_token');
@@ -137,7 +135,7 @@ class AgentRepository extends BaseRepository implements AgentContract
 
         return $data;
     }
-    public function updateAgentVerification(array $params)
+    public function updateMerchantVerification(array $params)
     {
         $data = $this->findOneOrFail($params['id']);
         $collection = collect($params)->except('_token');
@@ -151,7 +149,7 @@ class AgentRepository extends BaseRepository implements AgentContract
      * @param $id
      * @return bool|mixed
      */
-    public function deleteAgent($id)
+    public function deleteMerchant($id)
     {
         $data = $this->findOneOrFail($id);
         $data->delete();

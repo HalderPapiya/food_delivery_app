@@ -9,6 +9,8 @@ use App\Contracts\AgentContract;
 use App\Repositories\AgentRepository;
 use App\Contracts\AgentSalaryContract;
 use App\Repositories\AgentSalaryRepository;
+use App\Contracts\MerchantContract;
+use App\Repositories\MerchantRepository;
 
 
 use App\Contracts\CategoryContract;
@@ -72,6 +74,7 @@ class RepositoryServiceProvider extends ServiceProvider
         UserContract::class =>  UserRepository::class,
         AgentContract::class =>  AgentRepository::class,
         AgentSalaryContract::class =>  AgentSalaryRepository::class,
+        MerchantContract::class =>  MerchantRepository::class,
 
 
         

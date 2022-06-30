@@ -2,33 +2,34 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Contracts\AgentContract;
+use App\Contracts\MerchantContract;
 use App\Http\Controllers\BaseController;
 use Illuminate\Http\Request;
 
-class AgentController extends BaseController
+class MerchantController extends BaseController
 {
 
-    protected $AgentRepository;
+    protected $MerchantRepository;
 
     /**
-     * AgentManagementController constructor.
-     * @param AgentRepository $AgentRepository
+     * MerchantManagementController constructor.
+     * @param MerchantRepository $MerchantRepository
      */
 
-    public function __construct(AgentContract $agentRepository)
+    public function __construct(MerchantContract $merchantRepository)
     {
-        $this->agentRepository = $agentRepository;
+        $this->merchantRepository = $merchantRepository;
     }
 
     /**
-     * List all the Agents
+     * List all the Merchants
      */
     public function index()
     {
-        $data = $this->agentRepository->listAgents();
-        $this->setPageTitle('Agents', 'List of all Agents');
-        return view('admin.agent.index', compact('data'));
+        $data = $this->merchantRepository->listMerchants();
+        // dd($data);
+        $this->setPageTitle('Merchants', 'List of all Merchants');
+        return view('admin.merchant.index', compact('data'));
     }
 
     /**
@@ -38,8 +39,8 @@ class AgentController extends BaseController
      */
     public function create()
     {
-        $this->setPageTitle('Agent', 'Create Agent');
-        return view('admin.agent.add');
+        $this->setPageTitle('Merchant', 'Create Merchant');
+        return view('admin.merchant.add');
     }
 
     /**
@@ -57,23 +58,25 @@ class AgentController extends BaseController
             'email' =>  'required',
             'pin_code' =>  'required',
             'phone' =>  'required|integer|digits:10',
-            'password' =>  'required',
+            // 'password' =>  'required',
             'address' =>  'required',
             'city' =>  'required',
+            // 'shop_name' =>  'required',
             // 'video' =>  'max:50000',
         ]);
         // $this->Validate($request,[
         //     'file'=>'max:50000', //50MB
         //     'syllabus'=>'max:50000'
         // ]);
+        
         $params = $request->except('_token');
 
-        $data = $this->agentRepository->createAgent($params);
+        $data = $this->merchantRepository->createMerchant($params);
 // dd($data);
         if (!$data) {
-            return $this->responseRedirectBack('Error occurred while creating agent.', 'error', true, true);
+            return $this->responseRedirectBack('Error occurred while creating merchant.', 'error', true, true);
         }
-        return $this->responseRedirect('admin.agent.index', 'Agent has been added successfully', 'success', false, false);
+        return $this->responseRedirect('admin.merchant.index', 'Merchant has been added successfully', 'success', false, false);
     }
 
     /**
@@ -82,10 +85,10 @@ class AgentController extends BaseController
      */
     public function edit($id)
     {
-        $data = $this->agentRepository->findAgentById($id);
+        $data = $this->merchantRepository->findMerchantById($id);
 
-        $this->setPageTitle('Agent', 'Edit Agent : ' . $data->title);
-        return view('admin.agent.edit', compact('data'));
+        $this->setPageTitle('Merchant', 'Edit Merchant : ' . $data->title);
+        return view('admin.merchant.edit', compact('data'));
     }
    
     /**
@@ -109,12 +112,12 @@ class AgentController extends BaseController
 
         //dd($params);
 
-        $data = $this->agentRepository->updateAgent($params);
+        $data = $this->merchantRepository->updateMerchant($params);
 
         if (!$data) {
-            return $this->responseRedirectBack('Error occurred while updating agent.', 'error', true, true);
+            return $this->responseRedirectBack('Error occurred while updating merchant.', 'error', true, true);
         }
-        return $this->responseRedirectBack('Agent updated successfully', 'success', false, false);
+        return $this->responseRedirectBack('Merchant updated successfully', 'success', false, false);
     }
 
      /**
@@ -127,10 +130,10 @@ class AgentController extends BaseController
 
         $params = $request->except('_token');
 
-        $data = $this->agentRepository->updateAgentStatus($params);
+        $data = $this->merchantRepository->updateMerchantStatus($params);
 
         if ($data) {
-            return response()->json(array('message' => 'Agent status successfully updated'));
+            return response()->json(array('message' => 'Merchant status successfully updated'));
         }
     }
     
@@ -140,7 +143,7 @@ class AgentController extends BaseController
 
         $params = $request->except('_token');
 
-        $data = $this->agentRepository->updateAgentVerification($params);
+        $data = $this->merchantRepository->updateMerchantVerification($params);
 
         if ($data) {
             return response()->json(array('message' => 'Verified successfully'));
@@ -152,11 +155,11 @@ class AgentController extends BaseController
      */
     public function destroy($id)
     {
-        $data = $this->agentRepository->deleteAgent($id);
+        $data = $this->merchantRepository->deleteMerchant($id);
 
         if (!$data) {
-            return $this->responseRedirectBack('Error occurred while deleting agent.', 'error', true, true);
+            return $this->responseRedirectBack('Error occurred while deleting merchant.', 'error', true, true);
         }
-        return $this->responseRedirect('admin.agent.index', 'Agent deleted successfully', 'success', false, false);
+        return $this->responseRedirect('admin.merchant.index', 'Merchant deleted successfully', 'success', false, false);
     }
 }
